@@ -2,7 +2,7 @@ import os
 import re
 import requests
 from google.cloud import firestore
-from .crawler import get_youtube_channel_handle
+from crawler import get_youtube_channel_handle
 
 db = firestore.Client()
 

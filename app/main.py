@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from app.sink_discovery import discover_sink_channels
+from sink_discovery import get_channel_handle
 
 app = Flask(__name__)
 
@@ -10,5 +10,5 @@ def run():
     if not domains:
         return jsonify({"error": "No domains provided"}), 400
 
-    result = discover_sink_channels(domains)
+    result = get_channel_handle(domains)
     return jsonify({"status": "ok", "results": result})
