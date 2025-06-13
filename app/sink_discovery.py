@@ -21,8 +21,11 @@ def get_secret(secret_id):
     name = f"projects/{project_id}/secrets/{secret_id}/versions/latest"
     return client.access_secret_version(name=name).payload.data.decode("utf-8")
 
-GCLOUD_API_KEY = get_secret("GCLOUD_API_KEY")
-CSE_ENGINE_ID = get_secret("CSE_ENGINE_ID")
+def get_gcloud_api_key():
+    return get_secret("GCLOUD_API_KEY")
+
+def get_cse_engine_id():
+    return get_secret("CSE_ENGINE_ID")
 
 def discover_sink_channels(domains):
     discovered = []
@@ -30,8 +33,8 @@ def discover_sink_channels(domains):
         query = f"site:youtube.com {domain}"
         r = requests.get("https://www.googleapis.com/customsearch/v1", params={
             "q": query,
-            "key": GCLOUD_API_KEY,
-            "cx": CSE_ENGINE_ID
+            "key": get_gcloud_api_key(),
+            "cx": get_cse_engine_id()
         })
 
         for item in r.json().get("items", []):
