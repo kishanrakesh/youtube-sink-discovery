@@ -2,7 +2,7 @@ import os
 import re
 import requests
 from google.cloud import firestore
-from crawler import get_youtube_channel_handle
+from app.crawler import get_channel_handle
 
 db = firestore.Client()
 
@@ -36,7 +36,7 @@ def discover_sink_channels(domains):
 
         for item in r.json().get("items", []):
             channel_url = item.get("link")
-            handle = get_youtube_channel_handle(channel_url)
+            handle = get_channel_handle(channel_url)
 
             doc = {
                 "channel_url": channel_url,

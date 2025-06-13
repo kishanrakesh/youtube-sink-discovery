@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from sink_discovery import get_channel_handle
+from app.sink_discovery import get_channel_handle
 
 app = Flask(__name__)
 
