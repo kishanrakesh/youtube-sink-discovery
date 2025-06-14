@@ -7,8 +7,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # ✅ Selector (can be overridden via env var)
-DEFAULT_HANDLE_SELECTOR = "div.yt-content-metadata-view-model-wiz__metadata-row span.yt-core-attributed-string--link-inherit-color"
-HANDLE_ELEMENT = os.environ.get("HANDLE_ELEMENT", DEFAULT_HANDLE_SELECTOR)
+HANDLE_ELEMENT = "span.yt-core-attributed-string--link-inherit-color"
 
 def get_channel_handle(channel_url):
     logger.info(f"Launching browser to get handle from: {channel_url}")
@@ -20,7 +19,7 @@ def get_channel_handle(channel_url):
             page.goto(channel_url, wait_until="networkidle")
 
             logger.info(f"Looking for handle using selector: {HANDLE_ELEMENT}")
-            handle_elem = page.query_selector(HANDLE_ELEMENT)
+            handle_elem = page.wait_for_selector(HANDLE_ELEMENT, timeout=5000)
 
             if handle_elem:
                 handle = handle_elem.inner_text()

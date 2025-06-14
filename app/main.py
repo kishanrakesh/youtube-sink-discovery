@@ -1,6 +1,6 @@
 import logging
 from flask import Flask, request, jsonify
-from app.sink_discovery import get_channel_handle
+from app.sink_discovery import discover_sink_channels
 
 # ✅ Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -22,7 +22,7 @@ def run():
             return jsonify({"error": "No domains provided"}), 400
 
         logger.info(f"Processing {len(domains)} domain(s): {domains}")
-        result = get_channel_handle(domains)
+        result = discover_sink_channels(domains)
 
         logger.info(f"Discovered {len(result)} channel(s)")
         return jsonify({"status": "ok", "results": result})
